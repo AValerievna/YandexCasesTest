@@ -17,9 +17,10 @@ public class TestLoginPage {
 
     @BeforeTest
     public void setup(){
+        System.setProperty("webdriver.gecko.driver", "resources\\geckodriver.exe");
         driver = new FirefoxDriver();
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-        driver.get("https://market.yandex.ru");
+        driver.get("https://passport.yandex.ru/auth");
     }
 
     /**
