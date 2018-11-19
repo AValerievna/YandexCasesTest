@@ -1,12 +1,12 @@
-package tests;
+package yandex.tests;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.testng.Assert;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
-import pages.HomePage;
-import pages.LoginPage;
+import yandex.pages.HomePage;
+import yandex.pages.LoginPage;
 
 import java.util.concurrent.TimeUnit;
 
