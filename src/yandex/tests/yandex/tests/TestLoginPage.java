@@ -1,19 +1,20 @@
+package yandex.tests;
 
-import framework.BrowserTypes;
-import framework.WDriver;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import yandex.pages.*;
+import framework.*;
 import org.testng.Assert;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
-import yandex.pages.HomePage;
-import yandex.pages.LoginPage;
+
 
 import java.util.concurrent.TimeUnit;
 
 public class TestLoginPage {
     //WebDriver driver;
+
     LoginPage objLogin;
     HomePage objHomePage;
 
@@ -23,13 +24,13 @@ public class TestLoginPage {
         driver = new FirefoxDriver();
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);*/
 
-        WDriver.startBrowser(BrowserTypes.FIREFOX, 30);
+        //WDriver.startBrowser(BrowserTypes.FIREFOX, 30);
 
 
         //WDriver.browser.get("https://passport.yandex.ru/auth");
     }
 
-    @Test(priority=0)
+    @Test
     public void test_Home_Page_Appear_Correct(){
         //objLogin = new LoginPage();
         //objLogin.navigate();
