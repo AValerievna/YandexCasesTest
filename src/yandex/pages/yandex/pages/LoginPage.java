@@ -7,9 +7,9 @@ import org.openqa.selenium.WebElement;
 
 public class LoginPage extends Page{
    // private WebDriver driver;
-    private WebElement inpUser;
-    private WebElement inpPwd;
-    private WebElement btnLogin;
+    private By username = By.name("login");
+    private By passwd = By.name("passwd");
+    private By login = By.xpath("//button[@type ='submit']");
     private static final String loginUrl="https://passport.yandex.ru/auth";
 
 /*    public LoginPage(WebDriver driver){
@@ -24,13 +24,13 @@ public class LoginPage extends Page{
 
     public void loginTo(String strUserName,String strPassword){
 
-        inpUser = WDriver.browser.findElement(By.name("login"));
+        WebElement inpUser = WDriver.browser.findElement(username);
         inpUser.sendKeys(strUserName);
 
-        inpPwd = WDriver.browser.findElement(By.name("passwd"));
+        WebElement inpPwd = WDriver.browser.findElement(passwd);
         inpPwd.sendKeys(strPassword);
 
-        btnLogin = WDriver.browser.findElement(By.xpath("//button[@type ='submit']"));
+        WebElement btnLogin = WDriver.browser.findElement(login);
         btnLogin.click();
 
     }

@@ -6,7 +6,7 @@ import org.openqa.selenium.WebDriver;
 public class HomePage extends Page{
     WebDriver driver;
     private static final String homeUrl="https://market.yandex.ru";
-    public static final String HOME_PAGE_IDENT = "//div[@data-zone-name='morda-context']";
+    private By homePageIdent = By.xpath("//div[@data-zone-name='morda-context']");
 
     /*public HomePage(WebDriver driver){
         this.driver = driver;
@@ -21,7 +21,7 @@ public class HomePage extends Page{
     }
 */
     public String getHomePageDataZoneName(){
-        return	driver.findElement(By.xpath(HOME_PAGE_IDENT)).getText();
+        return	driver.findElement(homePageIdent).getText();
     }
 
 }
