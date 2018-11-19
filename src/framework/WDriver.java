@@ -4,11 +4,12 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-import java.sql.Driver;
+import java.util.concurrent.TimeUnit;
+
 
 public class WDriver {
     private static WebDriverWait browserWait;
-    private static WebDriver browser;
+    public static WebDriver browser;
 
     public static WebDriver getWebDriverInstance() {
         if (null == browser) {
@@ -18,7 +19,18 @@ public class WDriver {
         }
     }
 
-    public static void StartBrowser(BrowserTypes browserType, int defaultTimeOut) {
+    public static WebDriverWait getWebDriverWaitInstance() {
+        if (browserWait == null || null == browser) {
+            throw new IllegalStateException();
+        } else {
+            return browserWait;
+        }
+    }
+/*    public static WebDriverWait setWebDriverWaitInstance() {
+
+    }*/
+
+    public static void startBrowser(BrowserTypes browserType, int defaultTimeOut) {
         if (browser!=null) {
             throw new IllegalStateException();
         } else {
@@ -26,7 +38,8 @@ public class WDriver {
             {
                 case FIREFOX:
                     System.setProperty("webdriver.gecko.driver", ".//src/main/resources/geckodriver.exe");
-                    Driver.Browser = new FirefoxDriver();
+                    browser = new FirefoxDriver();
+                    browser.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 
                     break;
                 case IE:
@@ -37,7 +50,7 @@ public class WDriver {
                     break;
             }
         }
-        //BrowserWait = new WebDriverWait(Driver.Browser, TimeSpan.FromSeconds(defaultTimeOut));
+        browserWait = new WebDriverWait(browser, defaultTimeOut);
     }
         //https://kreisfahrer.gitbooks.io/selenium-webdriver/content/page_object_pattern_arhitektura_testovogo_proekta/ispolzovanie_patterna_page_object.html
         //https://www.automatetheplanet.com/singleton-design-pattern/
@@ -52,6 +65,7 @@ public class WDriver {
             browser.quit();
         }
         browser = null;
+        browserWait = null;
     }
 
 
