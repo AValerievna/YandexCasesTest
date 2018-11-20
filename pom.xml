@@ -30,7 +30,8 @@
 
     <build>
         <testSourceDirectory>src</testSourceDirectory>
-        <testResources>src/resources</testResources>
+        <testResources><testResource><directory>src/resources</directory></testResource></testResources>
+
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
