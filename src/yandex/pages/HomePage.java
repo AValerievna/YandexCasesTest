@@ -15,7 +15,10 @@ public class HomePage extends Page{
     private static final String homeUrl="https://market.yandex.ru";
     private By homePageIdent = By.xpath("//div[@data-zone-name='morda_context']");
     private By btnLogin = By.xpath("//div[@class='n-passport-suggest-popup-opener']//a");
+    private By btnPopup = By.xpath("//div[@class='n-passport-suggest-popup-opener']//a");
+    private By btnLogout = By.className("user__logout");
     private By lstTopMenu = By.xpath("//li[not(contains(@class,\"topmenu__item_mode_current\"))]");
+    private By usrEntLbl = By.className("user__enter-label");
 
 
     public HomePage(WebDriver wb){
@@ -26,9 +29,10 @@ public class HomePage extends Page{
         return	elementExists(homePageIdent);
     }
 
+
     public void clickLogin(){
-        WebElement btnLogin = wd.findElement(this.btnLogin);
-        btnLogin.click();
+        WebElement refLogin = wd.findElement(btnLogin);
+        refLogin.click();
     }
 
     public void returnToHomePage(){
@@ -44,4 +48,16 @@ public class HomePage extends Page{
     public List<WebElement> getPopularList() {
         return wd.findElements(lstTopMenu);
     }
+
+    public void logOut(){
+        WebElement refPopup = wd.findElement(btnPopup);
+        refPopup.click();
+        WebElement refLogout = wd.findElement(btnLogout);
+        refLogout.click();
+    }
+
+    public boolean userEnterLabelSpanExists(){
+        return elementExists(usrEntLbl);
+    }
+
 }

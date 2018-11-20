@@ -1,5 +1,6 @@
 package yandex.tests;
 
+import com.opencsv.CSVWriter;
 import framework.BrowserTypes;
 import framework.WDriver;
 
@@ -12,6 +13,12 @@ import yandex.pages.CategoryPage;
 import yandex.pages.HomePage;
 import yandex.pages.LoginPage;
 
+import java.io.FileOutputStream;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
@@ -42,6 +49,7 @@ public class TestLoginPage {
         Assert.assertTrue(objLoginPage.passpPageDivExists());
 
 
+
         objLoginPage.loginTo("aleksia.denica", "Monkeyslut");
         objHomePage.returnToHomePage();
 
@@ -57,6 +65,28 @@ public class TestLoginPage {
         Assert.assertTrue(objCatPage.rightCategoryThemeTitle(randName));
 
         objHomePage.navigate();
+
+        //WDriver.getWebDriverInstance().getPageSource();
+
+
+        try {
+            CSVWriter writer = new CSVWriter(new FileWriter("yourfile.csv"), '\n');
+            // feed in your array (or convert your data to an array)
+            Thread.sleep(12000);
+            WDriver.getWebDriverInstance().navigate().refresh();
+            String[] entries = WDriver.getWebDriverInstance().getPageSource().split("[^>.+?</div></div></div>)]");
+            writer.writeNext(entries);
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+
+        objHomePage.logOut();
+        Assert.assertTrue(objHomePage.userEnterLabelSpanExists());
+
     }
 
 

@@ -34,6 +34,19 @@ public class LoginPage extends Page{
 
     }
 
+/*    public void loginTo(String strUserName,String strPassword){
+
+        WebElement inpUser = WDriver.getWebDriverInstance().findElement(username);
+        inpUser.sendKeys(strUserName);
+
+        WebElement inpPwd = WDriver.getWebDriverInstance().findElement(passwd);
+        inpPwd.sendKeys(strPassword);
+
+        WebElement btnLogin = WDriver.getWebDriverInstance().findElement(login);
+        btnLogin.click();
+
+    }*/
+
     public boolean passpPageDivExists(){
         return elementExists(loginPageIdent);
     }
