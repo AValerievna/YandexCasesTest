@@ -3,6 +3,7 @@ package yandex.tests;
 import framework.BrowserTypes;
 import framework.WDriver;
 
+import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
@@ -10,11 +11,15 @@ import org.testng.annotations.Test;
 import yandex.pages.HomePage;
 import yandex.pages.LoginPage;
 
-public class TestLoginPage {
-    //WebDriver driver;
+import java.util.List;
+import java.util.Random;
 
-    LoginPage objLoginPage;
-    HomePage objHomePage;
+public class TestLoginPage {
+
+    private LoginPage objLoginPage;
+    private HomePage objHomePage;
+    private WebElement randomElement;
+
 
     @BeforeTest
     public void setupTest(){
@@ -32,14 +37,18 @@ public class TestLoginPage {
         objHomePage.clickLogin();
         redirectionToLoginPage();
         objLoginPage = new LoginPage(WDriver.getWebDriverInstance());
-
         Assert.assertTrue(objLoginPage.passpPageDivExists());
 
 
         objLoginPage.loginTo("aleksia.denica", "Monkeyslut");
         objHomePage.returnToHomePage();
 
+        List<WebElement> popList = objHomePage.getPopularList();
+        Random rand = new Random();
+        randomElement = popList.get(rand.nextInt(popList.size()));
 
+        randomElement.click();
+        
 
     }
 
@@ -49,7 +58,6 @@ public class TestLoginPage {
             String[] handlers = new String[2];
             handlers = WDriver.getWebDriverInstance().getWindowHandles().toArray(handlers);
             WDriver.getWebDriverInstance().switchTo().window(handlers[1]);
-            System.out.println(WDriver.getWebDriverInstance().getCurrentUrl());
         }
     }
 

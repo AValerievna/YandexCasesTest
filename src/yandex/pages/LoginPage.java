@@ -33,7 +33,7 @@ public class LoginPage extends Page{
         btnLogin.click();
 
     }
-    
+
     public boolean passpPageDivExists(){
         return elementExists(loginPageIdent);
     }
