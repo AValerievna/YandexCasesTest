@@ -29,7 +29,8 @@
     </dependencies>
 
     <build>
-        <testSourceDirectory>src/yandex/tests</testSourceDirectory>
+        <testSourceDirectory>src</testSourceDirectory>
+        <testResources>src/resources</testResources>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
