@@ -3,6 +3,7 @@ package yandex.tests;
 import framework.BrowserTypes;
 import framework.WDriver;
 
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.testng.Assert;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
@@ -38,20 +39,26 @@ public class TestLoginPage {
 
         objHomePage.clickLogin();
         redirectionToLoginPage();
+        //redirectToLoginPage();
         objLoginPage = new LoginPage(WDriver.getWebDriverInstance());
 
         //FIX!!
         // Assert.assertTrue(objLoginPage.getPasspPageDiv().toLowerCase().contains("passp"));
 
-        objLoginPage.navigate();
+        //objLoginPage.navigate();
         objLoginPage.loginTo("aleksia.denica", "Monkeyslut");
-        System.out.println("URL "+WDriver.getWebDriverInstance().getCurrentUrl());
-        objPasspPage= new PassportPage(WDriver.getWebDriverInstance());
-        Assert.assertTrue(objPasspPage.auhorizedPageDivExists());
+        objHomePage.returnToHomePage();
+        //System.out.println("URL "+WDriver.getWebDriverInstance().getCurrentUrl());
+        //objPasspPage= new PassportPage(WDriver.getWebDriverInstance());
+        //System.out.println("URL "+ WDriver.getWebDriverInstance().getCurrentUrl());
+       // Assert.assertTrue(objHomePage.homePageDataZoneExists());
 
 
     }
 
+    //public void redirectToLoginPage(){
+     //  WDriver.getWebDriverWaitInstance().until(ExpectedConditions.elementToBeClickable(By.id(id)));;
+    //}
     public void redirectionToLoginPage(){
         if(!WDriver.getWebDriverInstance().getCurrentUrl().contains("passport")){
             String[] handlers = new String[2];

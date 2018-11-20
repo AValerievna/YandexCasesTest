@@ -39,8 +39,8 @@ public class LoginPage extends Page{
 
     //FIX!!!
     public String getPasspPageDiv(){
-        System.out.println(wb.findElement(By.xpath("//div[@xpath='1']")).getAttribute("class"));
-        return wb.findElement(loginPageIdent).getAttribute("class");
+        System.out.println(wd.findElement(By.xpath("//div[@xpath='1']")).getAttribute("class"));
+        return wd.findElement(loginPageIdent).getAttribute("class");
     }
 
 }

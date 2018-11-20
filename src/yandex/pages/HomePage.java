@@ -1,8 +1,11 @@
 package yandex.pages;
 
+import framework.WDriver;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedCondition;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 
 public class HomePage extends Page{
     private static final String homeUrl="https://market.yandex.ru";
@@ -19,10 +22,13 @@ public class HomePage extends Page{
     }
 
     public void clickLogin(){
-        WebElement btnLogin = wb.findElement(this.btnLogin);
+        WebElement btnLogin = wd.findElement(this.btnLogin);
         btnLogin.click();
     }
 
+    public void returnToHomePage(){
+        WDriver.getWebDriverWaitInstance(30).until(ExpectedConditions.presenceOfElementLocated(homePageIdent));
+    }
 
 
 

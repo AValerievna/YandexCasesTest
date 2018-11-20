@@ -19,7 +19,8 @@ public class WDriver {
         }
     }
 
-    public static WebDriverWait getWebDriverWaitInstance() {
+    public static WebDriverWait getWebDriverWaitInstance(int defaultTimeOut) {
+        browserWait = new WebDriverWait(browser, defaultTimeOut);
         if (browserWait == null || null == browser) {
             throw new IllegalStateException();
         } else {
@@ -39,7 +40,7 @@ public class WDriver {
                 case FIREFOX:
                     System.setProperty("webdriver.gecko.driver", "resources/geckodriver.exe");
                     browser = new FirefoxDriver();
-                    browser.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+                    browser.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
 
                     break;
                 case IE:

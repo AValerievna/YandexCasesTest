@@ -13,8 +13,8 @@ public class PassportPage extends Page {
     }
 
     public boolean auhorizedPageDivExists(){
-        System.out.println(wb.getCurrentUrl());
-        System.out.println(wb.findElement(authorizedIdent).getAttribute("class"));
+        System.out.println(wd.getCurrentUrl());
+        System.out.println(wd.findElement(authorizedIdent).getAttribute("class"));
         return	elementExists(authorizedIdent);
     }
 }

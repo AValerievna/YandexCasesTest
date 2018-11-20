@@ -6,11 +6,11 @@ import org.openqa.selenium.WebDriver;
 
 public class Page {
     protected String url;
-    protected WebDriver wb;
+    protected WebDriver wd;
 
-    public Page(String url, WebDriver wb){
+    public Page(String url, WebDriver wd){
         this.url=url;
-        this.wb=wb;
+        this.wd = wd;
     }
 
 
@@ -19,6 +19,6 @@ public class Page {
     }
 
     protected boolean elementExists(By by) {
-        return  (wb.findElements(by).size() != 0);
+        return  (wd.findElements(by).size() != 0);
     }
 }
