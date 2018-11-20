@@ -8,14 +8,22 @@ public class Page {
     protected String url;
     protected WebDriver wd;
 
-    public Page(String url, WebDriver wd){
-        this.url=url;
+    public Page(WebDriver wd){
         this.wd = wd;
+    }
+    public Page(String url, WebDriver wd){
+        this(wd);
+        this.url=url;
+
     }
 
 
     public void navigate() {
-        WDriver.getWebDriverInstance().get(this.url);
+        if(url!=null) {
+            WDriver.getWebDriverInstance().get(this.url);
+        } else {
+            throw  new NullPointerException();
+        }
     }
 
     protected boolean elementExists(By by) {

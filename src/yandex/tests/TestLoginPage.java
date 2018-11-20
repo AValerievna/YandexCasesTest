@@ -8,6 +8,7 @@ import org.testng.Assert;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
+import yandex.pages.CategoryPage;
 import yandex.pages.HomePage;
 import yandex.pages.LoginPage;
 
@@ -18,6 +19,7 @@ public class TestLoginPage {
 
     private LoginPage objLoginPage;
     private HomePage objHomePage;
+    private CategoryPage objCatPage;
     private WebElement randomElement;
 
 
@@ -47,9 +49,14 @@ public class TestLoginPage {
         Random rand = new Random();
         randomElement = popList.get(rand.nextInt(popList.size()));
 
+        String randName=randomElement.getAttribute("data-department");
+        System.out.println(randomElement.getAttribute("data-department"));
         randomElement.click();
-        
 
+        objCatPage = new CategoryPage(WDriver.getWebDriverInstance());
+        Assert.assertTrue(objCatPage.rightCategoryThemeTitle(randName));
+
+        objHomePage.navigate();
     }
 
 
