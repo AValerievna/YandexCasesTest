@@ -19,17 +19,13 @@ public class WDriver {
         }
     }
 
-    public static WebDriverWait getWebDriverWaitInstance(int defaultTimeOut) {
-        browserWait = new WebDriverWait(browser, defaultTimeOut);
+    public static WebDriverWait getWebDriverWaitInstance() {
         if (browserWait == null || null == browser) {
             throw new IllegalStateException();
         } else {
             return browserWait;
         }
     }
-/*    public static WebDriverWait setWebDriverWaitInstance() {
-
-    }*/
 
     public static void startBrowser(BrowserTypes browserType, int defaultTimeOut) {
         if (browser!=null) {
@@ -40,7 +36,7 @@ public class WDriver {
                 case FIREFOX:
                     System.setProperty("webdriver.gecko.driver", "resources/geckodriver.exe");
                     browser = new FirefoxDriver();
-                    browser.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
+                    browser.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
 
                     break;
                 case IE:
@@ -53,13 +49,6 @@ public class WDriver {
         }
         browserWait = new WebDriverWait(browser, defaultTimeOut);
     }
-        //https://kreisfahrer.gitbooks.io/selenium-webdriver/content/page_object_pattern_arhitektura_testovogo_proekta/ispolzovanie_patterna_page_object.html
-        //https://www.automatetheplanet.com/singleton-design-pattern/
-        //https://www.automatetheplanet.com/advanced-page-object-pattern/
-        //https://selenium2.ru/docs/webdriver
-        //https://selenium2.ru/docs/test-design-considerations.html
-        //http://seleniumwebdriver.org/how-to-use-singleton-class
-
 
     public static void stopBrowser(){
         if (null != browser){

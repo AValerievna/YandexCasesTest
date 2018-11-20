@@ -7,6 +7,8 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
+import java.util.concurrent.TimeUnit;
+
 public class HomePage extends Page{
     private static final String homeUrl="https://market.yandex.ru";
     private By homePageIdent = By.xpath("//div[@data-zone-name='morda_context']");
@@ -27,7 +29,14 @@ public class HomePage extends Page{
     }
 
     public void returnToHomePage(){
-        WDriver.getWebDriverWaitInstance(30).until(ExpectedConditions.presenceOfElementLocated(homePageIdent));
+        wd.manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS);
+
+        System.out.println("URL" + wd.getCurrentUrl());
+        WDriver.getWebDriverWaitInstance().until(ExpectedConditions.urlContains("market"));
+        wd.switchTo().window(wd.getWindowHandles().iterator().next());
+        wd.findElement(homePageIdent);
+        WDriver.getWebDriverWaitInstance().until(ExpectedConditions.presenceOfElementLocated(homePageIdent));
+        System.out.println("URL" + wd.getCurrentUrl());
     }
 
 
