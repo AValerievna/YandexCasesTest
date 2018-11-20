@@ -1,3 +1,5 @@
+package yandex.tests;
+
 import framework.BrowserTypes;
 import framework.WDriver;
 
