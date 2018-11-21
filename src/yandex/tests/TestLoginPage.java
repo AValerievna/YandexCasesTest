@@ -3,8 +3,8 @@ package yandex.tests;
 import com.opencsv.CSVWriter;
 import framework.Configuration;
 import framework.WDriver;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.testng.Assert;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
@@ -15,24 +15,23 @@ import yandex.pages.LoginPage;
 
 import java.io.FileWriter;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 public class TestLoginPage {
 
-    private static final int DEFAULT_TIME_OUT = 10;
+
     private static final String DATA_DEPARTMENT = "data-department";
-    private static final String REGEX1 = "div[data-zone-data*=\"Популярные\"] div div";
-    private static final String INNER_HTML = "innerHTML";
-    private static final String REGEX2 = "<div class=\"name[^\"]*\".*?>(.*?)</div>";
     private Configuration conf;
 
     @BeforeTest
     public void setupTest() throws Exception {
         conf = new Configuration();
-        WDriver.startBrowser(conf, DEFAULT_TIME_OUT);
+        WDriver.startBrowser(conf, conf.getDefaultTimeOut());
     }
 
     @Test
@@ -59,6 +58,7 @@ public class TestLoginPage {
         WebElement randomElement = popList.get(rand.nextInt(popList.size()));
 
         String randName = randomElement.getAttribute(DATA_DEPARTMENT);
+        WDriver.getWebDriverWaitInstance().until(ExpectedConditions.elementToBeClickable(randomElement));
         randomElement.click();
 
         CategoryPage objCatPage = new CategoryPage(WDriver.getWebDriverInstance());
@@ -69,7 +69,10 @@ public class TestLoginPage {
 
         CSVWriter writer = new CSVWriter(new FileWriter(conf.getCsvFilePath()), conf.getSeparator());
         WDriver.getWebDriverInstance().navigate().refresh();
-        popularProducts().stream()
+        objHomePage.waitForPageLoading();
+
+        String sources = WDriver.getWebDriverInstance().getPageSource();
+        popularProducts(sources).stream()
                 .map(pr -> new String[]{pr})
                 .forEach(writer::writeNext);
         writer.close();
@@ -79,14 +82,46 @@ public class TestLoginPage {
 
     }
 
-    private static List<String> popularProducts() {
+    private static String openTag(int times) {
+        String openTag = "(<[^/][^>]*>[^<]*)";
+        return openTag + "{" + times + "}";
+    }
+
+    private static String closeTag(int times) {
+        String openTag = "(</[^>]*>[^<]*)";
+        return openTag + "{" + times + "}";
+    }
+
+    private static String openTag() {
+        return openTag(1);
+    }
+
+    private static String closeTag() {
+        return closeTag(1);
+    }
+
+    private static List<String> popularProducts(String yandexMarketMainPageContent) {
         List<String> result = new ArrayList<>();
-        String productsSection = WDriver.getWebDriverInstance().findElement(By.cssSelector(REGEX1)).getAttribute(INNER_HTML);
-        Pattern productNamePattern = Pattern.compile(REGEX2);
+        yandexMarketMainPageContent = yandexMarketMainPageContent.replaceAll("<!--[^>]*>", "");
+        Pattern productsSectionPattern = Pattern.compile(String.join("",
+                "Популярные товары</h3>[^<]*</span>[^<]*</div>[^<]*", openTag(5),
+                "(?<popular>(", // catch product items
+                openTag(10), closeTag(3), openTag(7), closeTag(), openTag(), closeTag(2),
+                "(", openTag(2), closeTag(3), openTag(3), closeTag(), openTag(), closeTag(2), ")?",
+                closeTag(3), openTag(2), closeTag(9),
+                ")*)"));
+        Matcher productsSectionMatcher = productsSectionPattern.matcher(yandexMarketMainPageContent);
+        boolean matches = productsSectionMatcher.find();
+        if (!matches) {
+            throw new IllegalArgumentException("Can not match given string");
+        }
+        String productsSection = productsSectionMatcher.group("popular");
+        Pattern productNamePattern = Pattern.compile("<div class=\"name[^\"]*\".*?>(.*?)</div>", Pattern.DOTALL);
         Matcher productNameMatcher = productNamePattern.matcher(productsSection);
         int start = 0;
         while (productNameMatcher.find(start)) {
-            result.add(productNameMatcher.group(1));
+            String matchedGroup = productNameMatcher.group(1);
+            result.add(Arrays.stream(matchedGroup.split("\r?\n")).map(String::trim).collect(Collectors.joining(" ")));
             start = productNameMatcher.end();
         }
         return result;

@@ -13,8 +13,9 @@ import java.util.List;
 public class HomePage extends Page {
 
     private By homePageIdent = By.xpath("//div[@data-zone-name='morda_context']");
-    private By btnLogin = By.xpath("//div[@class='n-passport-suggest-popup-opener']//a");
-    private By btnPopup = By.cssSelector("div.n-passport-suggest-popup-opener a");
+    private By btnLogin = By.xpath("//div[@class='n-passport-suggest-popup-opener']//a//span[contains(text(),\"Войти\")]");
+    private By btnPopup = By.xpath("//div[@class='n-passport-suggest-popup-opener']//a");
+    private By btnLogoutPopup = By.cssSelector("div.n-passport-suggest-popup-opener a");
     private By btnLogout = By.className("user__logout");
     private By lstTopMenu = By.xpath("//li[not(contains(@class,\"topmenu__item_mode_current\"))]");
     private By usrEntLbl = By.className("user__enter-label");
@@ -40,8 +41,12 @@ public class HomePage extends Page {
         WDriver.getWebDriverWaitInstance().until(ExpectedConditions.urlContains(homeUrlFragment));
         wd.switchTo().window(wd.getWindowHandles().iterator().next());
         wd.navigate().refresh();
-        wd.findElement(homePageIdent);
-        WDriver.getWebDriverWaitInstance().until(ExpectedConditions.presenceOfElementLocated(homePageIdent));
+        waitForPageLoading();
+    }
+
+    public void waitForPageLoading() {
+        wd.findElement(btnPopup);
+        WDriver.getWebDriverWaitInstance().until(ExpectedConditions.elementToBeClickable(btnPopup));
     }
 
 
@@ -51,7 +56,7 @@ public class HomePage extends Page {
     }
 
     public void logOut() {
-        WebElement refPopup = wd.findElement(btnPopup);
+        WebElement refPopup = wd.findElement(btnLogoutPopup);
         refPopup.click();
         WebElement refLogout = wd.findElement(btnLogout);
         refLogout.click();

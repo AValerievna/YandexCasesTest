@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.Properties;
 
 public class Configuration {
+    private int duration;
     private BrowserTypes browser;
     private String chromeDriverPath;
     private String usrName;
@@ -15,21 +16,29 @@ public class Configuration {
     private String homeUrl;
     private String homeUrlFragment;
     private String geckoDriverPath;
+    private int duration1;
+    private int timeouts;
+    private int defaultTimeOut;
 
     public Configuration() throws IOException {
         Properties prop = new Properties();
         prop.load(Configuration.class.getClassLoader().getResourceAsStream("configuration.properties"));
-        usrName=prop.getProperty("usr.name");
-        browser=BrowserTypes.valueOf(prop.getProperty("browser"));
-        loginUrl=prop.getProperty("login.url");
-        homeUrl=prop.getProperty("home.url");
+        usrName = prop.getProperty("usr.name");
+        browser = BrowserTypes.valueOf(prop.getProperty("browser"));
+        loginUrl = prop.getProperty("login.url");
+        homeUrl = prop.getProperty("home.url");
         homeUrlFragment = prop.getProperty("home.url.fragment");
-        geckoDriverPath=prop.getProperty("gecko.driver.path");
-        chromeDriverPath=prop.getProperty("chrome.driver.path");
-        strPass=prop.getProperty("str.pass");
-        urlLoginPageFragment=prop.getProperty("url.login.page.fragment");
-        csvFilePath=prop.getProperty("csv.file.path");
-        separator=prop.getProperty("separator").charAt(0);
+        geckoDriverPath = prop.getProperty("gecko.driver.path");
+        chromeDriverPath = prop.getProperty("chrome.driver.path");
+        strPass = prop.getProperty("str.pass");
+        urlLoginPageFragment = prop.getProperty("url.login.page.fragment");
+        csvFilePath = prop.getProperty("csv.file.path");
+        separator = prop.getProperty("separator").charAt(0);
+        duration = Integer.parseInt(prop.getProperty("duration"));
+        duration1 = Integer.parseInt(prop.getProperty("duration1"));
+        timeouts = Integer.parseInt(prop.getProperty("timeouts"));
+        defaultTimeOut = Integer.parseInt(prop.getProperty("default.time.out"));
+
 
     }
 
@@ -75,6 +84,22 @@ public class Configuration {
 
     String getGeckoDriverPath() {
         return geckoDriverPath;
+    }
+
+    int getDuration1() {
+        return duration1;
+    }
+
+    int getDuration() {
+        return duration;
+    }
+
+    int getTimeouts() {
+        return timeouts;
+    }
+
+    public int getDefaultTimeOut() {
+        return defaultTimeOut;
     }
 
 }

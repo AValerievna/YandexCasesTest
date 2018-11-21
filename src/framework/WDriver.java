@@ -50,9 +50,11 @@ public class WDriver {
                     break;
             }
         }
-        browser.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+        browser.manage().timeouts().implicitlyWait(conf.getTimeouts(), TimeUnit.SECONDS);
+        browser.manage().window().maximize();
         browserWait = new WebDriverWait(browser, defaultTimeOut);
-        wait = new FluentWait<>(browser).withTimeout(16,TimeUnit.SECONDS).pollingEvery(2,TimeUnit.SECONDS).ignoring(NoSuchElementException.class);
+
+        wait = new FluentWait<>(browser).withTimeout(conf.getDuration(),TimeUnit.SECONDS).pollingEvery(conf.getDuration1(),TimeUnit.SECONDS).ignoring(NoSuchElementException.class);
 
     }
 

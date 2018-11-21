@@ -5,13 +5,13 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
 public class Page {
-    protected String url;
-    protected WebDriver wd;
+    private String url;
+    WebDriver wd;
 
-    public Page(WebDriver wd){
+    Page(WebDriver wd){
         this.wd = wd;
     }
-    public Page(String url, WebDriver wd){
+    Page(String url, WebDriver wd){
         this(wd);
         this.url=url;
 
@@ -26,7 +26,8 @@ public class Page {
         }
     }
 
-    protected boolean elementExists(By by) {
+    boolean elementExists(By by) {
         return  (wd.findElements(by).size() != 0);
     }
+
 }
