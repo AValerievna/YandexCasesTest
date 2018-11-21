@@ -23,7 +23,7 @@ public class Configuration {
         browser=BrowserTypes.valueOf(prop.getProperty("browser"));
         loginUrl=prop.getProperty("login.url");
         homeUrl=prop.getProperty("home.url");
-        homeUrlFragment=prop.getProperty("home.url.fragment");
+        homeUrlFragment = prop.getProperty("home.url.fragment");
         geckoDriverPath=prop.getProperty("gecko.driver.path");
         chromeDriverPath=prop.getProperty("chrome.driver.path");
         strPass=prop.getProperty("str.pass");
