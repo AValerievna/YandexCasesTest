@@ -7,14 +7,15 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class CategoryPage extends Page{
-    Map<String, String> accord = new HashMap<>();
+    private static final String SUBSTR1 = "//h1[text()=\"";
+    private static final String SUBSTR_2 = "\"]";
 
     public CategoryPage(WebDriver wb){
         super(wb);
     }
 
     public boolean rightCategoryThemeTitle(String keyText) {
-        accord = new HashMap<>();
+        Map<String, String> accord = new HashMap<>();
         accord.put("Электроника", "Электроника");
         accord.put("Компьютеры", "Компьютерная техника");
         accord.put("Бытовая техника", "Бытовая техника");
@@ -25,6 +26,6 @@ public class CategoryPage extends Page{
         accord.put("Красота и здоровье", "Товары для красоты и здоровья");
         accord.put("Авто", "Товары для авто- и мототехники");
 
-        return elementExists(By.xpath("//h1[text()=\""+accord.get(keyText)+"\"]"));
+        return elementExists(By.xpath(SUBSTR1 + accord.get(keyText)+ SUBSTR_2));
     }
 }

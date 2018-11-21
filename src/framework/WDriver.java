@@ -1,15 +1,20 @@
 package framework;
 
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.support.ui.FluentWait;
+import org.openqa.selenium.support.ui.Wait;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.util.NoSuchElementException;
 import java.util.concurrent.TimeUnit;
 
 
 public class WDriver {
     private static WebDriverWait browserWait;
     private static WebDriver browser;
+    private static Wait<WebDriver> wait;
 
     public static WebDriver getWebDriverInstance() {
         if (null == browser) {
@@ -27,36 +32,45 @@ public class WDriver {
         }
     }
 
-    public static void startBrowser(BrowserTypes browserType, int defaultTimeOut) {
+    public static synchronized void startBrowser(Configuration conf, int defaultTimeOut ) {
         if (browser!=null) {
             throw new IllegalStateException();
         } else {
-            switch (browserType)
+            switch (conf.getBrowser())
             {
                 case FIREFOX:
-                    System.setProperty("webdriver.gecko.driver", "resources/geckodriver.exe");
+                    System.setProperty("webdriver.gecko.driver", conf.getGeckoDriverPath());
                     browser = new FirefoxDriver();
-                    browser.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
-
-                    break;
-                case IE:
                     break;
                 case CHROME:
+                    System.setProperty("webdriver.chrome.driver", conf.getChromeDriverPath());
+                    browser = new ChromeDriver();
                     break;
                 default:
                     break;
             }
         }
+        browser.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
         browserWait = new WebDriverWait(browser, defaultTimeOut);
+        wait = new FluentWait<>(browser).withTimeout(16,TimeUnit.SECONDS).pollingEvery(2,TimeUnit.SECONDS).ignoring(NoSuchElementException.class);
+
     }
 
-    public static void stopBrowser(){
+    public static synchronized void stopBrowser(){
         if (null != browser){
             browser.quit();
         }
         browser = null;
         browserWait = null;
+        wait = null;
     }
 
 
+    public static Wait<WebDriver> getWait() {
+        if (wait == null || null == browser) {
+            throw new IllegalStateException();
+        } else {
+            return wait;
+        }
+    }
 }
