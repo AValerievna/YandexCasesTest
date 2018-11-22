@@ -100,12 +100,8 @@ public class UtilityMethods {
         }
     }
 
-    public static void writeToCSV(HomePage objHomePage) throws IOException {
+    public static void writeToCSV(String sources) throws IOException {
         CSVWriter writer = new CSVWriter(new FileWriter(conf.getProperty("csv.file.path")), conf.getCharProperty("separator"));
-        WDriver.getWebDriverInstance().navigate().refresh();
-        objHomePage.waitForPageLoading();
-
-        String sources = WDriver.getWebDriverInstance().getPageSource();
         popularProducts(sources).stream()
                 .map(pr -> new String[]{pr})
                 .forEach(writer::writeNext);

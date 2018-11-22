@@ -36,7 +36,7 @@ public class TestScenario extends BaseTest{
         log.info("Authorized");
 
         List<WebElement> popList = objHomePage.getPopularList();
-        System.out.println("Got list of categories");
+        log.info("Got list of categories");
 
         Random rand = new Random();
         WebElement randomElement = popList.get(rand.nextInt(popList.size()));
@@ -51,7 +51,10 @@ public class TestScenario extends BaseTest{
 
         WDriver.getWebDriverInstance().get(objHomePage.getUrl());
 
-        UtilityMethods.writeToCSV(objHomePage);
+        WDriver.getWebDriverInstance().navigate().refresh();
+        objHomePage.waitForPageLoading();
+
+        UtilityMethods.writeToCSV(WDriver.getWebDriverInstance().getPageSource());
         log.info("Got list of popular things");
 
         objHomePage.logOut();
