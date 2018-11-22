@@ -12,6 +12,7 @@ import yandex.pages.LoginPage;
 import yandex.utils.UtilityMethods;
 
 import java.io.FileWriter;
+import java.io.IOException;
 import java.util.List;
 import java.util.Random;
 
@@ -25,7 +26,7 @@ public class TestScenario extends BaseTest{
         HomePage objHomePage = new HomePage(conf.getProperty("home.url"), WDriver.getWebDriverInstance());
         WDriver.getWebDriverInstance().get(objHomePage.getUrl());
         Assert.assertTrue(objHomePage.homePageDataZoneExists(),"Home page did not load");
-        System.out.println("On Home Yandex Market Page");
+        log.info("On Home Yandex Market Page");
 
         objHomePage.clickLogin();
         UtilityMethods.redirectionToLoginPage(conf.getProperty("url.login.page.fragment"));
@@ -33,11 +34,11 @@ public class TestScenario extends BaseTest{
 
         objLoginPage.waitForLoad();
         Assert.assertTrue(objLoginPage.passpPageDivExists(), "Login page did not load");
-        System.out.println("On Login Yandex Market Page");
+        log.info("On Login Yandex Market Page");
 
         objLoginPage.loginTo(conf.getProperty("usr.name"), conf.getProperty("str.pass"));
         objHomePage.returnToHomePage(conf.getProperty("home.url.fragment"));
-        System.out.println("Authorized");
+        log.info("Authorized");
 
         List<WebElement> popList = objHomePage.getPopularList();
         System.out.println("Got list of categories");
@@ -47,28 +48,20 @@ public class TestScenario extends BaseTest{
         String randName = randomElement.getAttribute(conf.getProperty("random.element.ident"));
         WDriver.getWebDriverWaitInstance().until(ExpectedConditions.elementToBeClickable(randomElement));
         randomElement.click();
-        System.out.println("Chose random category");
+        log.info("Chose random category");
 
         CategoryPage objCatPage = new CategoryPage(WDriver.getWebDriverInstance());
         Assert.assertTrue(objCatPage.rightCategoryThemeTitle(randName),"Category page title is not correct");
-        System.out.println("Category page has right title");
+        log.info("Category page has right title");
 
         WDriver.getWebDriverInstance().get(objHomePage.getUrl());
 
-        CSVWriter writer = new CSVWriter(new FileWriter(conf.getProperty("csv.file.path")), conf.getCharProperty("separator"));
-        WDriver.getWebDriverInstance().navigate().refresh();
-        objHomePage.waitForPageLoading();
-
-        String sources = WDriver.getWebDriverInstance().getPageSource();
-        popularProducts(sources).stream()
-                .map(pr -> new String[]{pr})
-                .forEach(writer::writeNext);
-        writer.close();
-        System.out.println("Got list of popular things");
+        UtilityMethods.writeToCSV(objHomePage);
+        log.info("Got list of popular things");
 
         objHomePage.logOut();
         Assert.assertTrue(objHomePage.userEnterLabelSpanExists(), "Logout did not happen");
-        System.out.println("Log out");
+        log.info("Log out");
 
     }
 

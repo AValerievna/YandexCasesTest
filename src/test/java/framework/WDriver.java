@@ -19,7 +19,7 @@ public class WDriver {
     private static Wait<WebDriver> wait;
     private static WebDriver browser;
 
-    public static WebDriver getWebDriverInstance() {
+    public static synchronized WebDriver getWebDriverInstance() {
         if (null == browser) {
             switch (BrowserTypes.valueOf(conf.getProperty("browser"))) {
                 case FIREFOX:

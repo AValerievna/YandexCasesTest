@@ -3,6 +3,7 @@ package framework;
 import java.io.IOException;
 import java.util.Properties;
 
+/**Work with property file*/
 public class Configuration {
     private Properties prop;
 
