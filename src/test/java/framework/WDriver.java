@@ -11,7 +11,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import java.util.NoSuchElementException;
 import java.util.concurrent.TimeUnit;
 
-import static yandex.tests.BaseTest.conf;
+import static framework.BaseTest.conf;
 
 
 public class WDriver {
@@ -49,7 +49,7 @@ public class WDriver {
         }
     }
 
-    public static synchronized void stopBrowser(){
+    static synchronized void stopBrowser(){
         if (null != browser){
             browser.quit();
         }

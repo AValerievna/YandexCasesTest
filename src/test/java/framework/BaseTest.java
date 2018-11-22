@@ -1,4 +1,4 @@
-package yandex.tests;
+package framework;
 
 import framework.Configuration;
 import framework.WDriver;
@@ -11,7 +11,7 @@ import java.util.logging.Logger;
  * Common for tests*/
 public class BaseTest {
     public static Configuration conf;
-    static Logger log;
+    protected static Logger log;
 
     @BeforeTest
     public void setupTest() throws Exception {

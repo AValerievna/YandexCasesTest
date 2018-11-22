@@ -2,7 +2,6 @@ package yandex.utils;
 
 import com.opencsv.CSVWriter;
 import framework.WDriver;
-import yandex.pages.HomePage;
 
 import java.io.FileWriter;
 import java.io.IOException;
@@ -13,7 +12,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
-import static yandex.tests.BaseTest.conf;
+import static framework.BaseTest.conf;
 
 public class UtilityMethods {
 

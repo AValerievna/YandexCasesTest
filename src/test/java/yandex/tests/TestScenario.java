@@ -1,5 +1,6 @@
 package yandex.tests;
 
+import framework.BaseTest;
 import framework.WDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -13,7 +14,7 @@ import yandex.utils.UtilityMethods;
 import java.util.List;
 import java.util.Random;
 
-public class TestScenario extends BaseTest{
+public class TestScenario extends BaseTest {
 
     @Test
     public void testScenario() throws Exception {
