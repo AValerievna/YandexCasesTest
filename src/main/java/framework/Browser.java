@@ -8,6 +8,7 @@ import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.Wait;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.time.Duration;
 import java.util.NoSuchElementException;
 import java.util.concurrent.TimeUnit;
 
@@ -36,7 +37,7 @@ public class Browser {
             browser.manage().timeouts().implicitlyWait(conf.getIntProperty("timeouts"), TimeUnit.SECONDS);
             browser.manage().window().maximize();
             browserWait = new WebDriverWait(browser, conf.getIntProperty("default.time.out"));
-            wait = new FluentWait<>(browser).withTimeout(conf.getIntProperty("fluent.duration"), TimeUnit.SECONDS).pollingEvery(conf.getIntProperty("fluent.duration.period"), TimeUnit.SECONDS).ignoring(NoSuchElementException.class);
+            wait = new FluentWait<>(browser).withTimeout(Duration.ofSeconds(conf.getIntProperty("fluent.duration"))).pollingEvery(Duration.ofSeconds(conf.getIntProperty("fluent.duration.period"))).ignoring(NoSuchElementException.class);
         }
         return browser;
     }

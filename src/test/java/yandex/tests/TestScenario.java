@@ -21,7 +21,7 @@ public class TestScenario extends BaseTest {
 
         HomePage objHomePage = new HomePage(conf.getProperty("home.url"), Browser.getWebDriverInstance());
         Browser.getWebDriverInstance().get(objHomePage.getUrl());
-        Assert.assertTrue(objHomePage.homePageDataZoneExists(),"Home page did not load");
+        Assert.assertTrue(objHomePage.homePageDataZoneExists(), "Home page did not load");
         log.info("On Home Yandex Market Page");
 
         objHomePage.clickLogin();
@@ -47,7 +47,7 @@ public class TestScenario extends BaseTest {
         log.info("Chose random category");
 
         CategoryPage objCatPage = new CategoryPage(Browser.getWebDriverInstance());
-        Assert.assertTrue(objCatPage.rightCategoryThemeTitle(randName),"Category page title is not correct");
+        Assert.assertTrue(objCatPage.rightCategoryThemeTitle(randName), "Category page title is not correct");
         log.info("Category page has right title");
 
         Browser.getWebDriverInstance().get(objHomePage.getUrl());

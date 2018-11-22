@@ -101,7 +101,7 @@ public class UtilityMethods {
     }
 
     public static void writeToCSV(String sources) throws IOException {
-        CSVWriter writer = new CSVWriter(new FileWriter(conf.getProperty("csv.file.path")), conf.getCharProperty("separator"));
+        CSVWriter writer = new CSVWriter(new FileWriter(conf.getProperty("csv.file.path")), conf.getCharProperty("separator"),CSVWriter.NO_QUOTE_CHARACTER,CSVWriter.NO_ESCAPE_CHARACTER,CSVWriter.DEFAULT_LINE_END);
         popularProducts(sources).stream()
                 .map(pr -> new String[]{pr})
                 .forEach(writer::writeNext);
