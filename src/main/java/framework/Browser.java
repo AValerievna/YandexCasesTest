@@ -14,7 +14,7 @@ import java.util.concurrent.TimeUnit;
 import static framework.BaseTest.conf;
 
 
-public class WDriver {
+public class Browser {
     private static WebDriverWait browserWait;
     private static Wait<WebDriver> wait;
     private static WebDriver browser;

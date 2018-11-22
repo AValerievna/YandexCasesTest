@@ -1,6 +1,6 @@
 package yandex.pages;
 
-import framework.WDriver;
+import framework.Browser;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -27,7 +27,7 @@ public class Page {
     }
 
     boolean elementExists(By by) {
-        WDriver.getWebDriverWaitInstance().until(ExpectedConditions.presenceOfElementLocated(by));
+        Browser.getWebDriverWaitInstance().until(ExpectedConditions.presenceOfElementLocated(by));
         return (wd.findElements(by).size() != 0);
     }
 

@@ -1,7 +1,5 @@
 package framework;
 
-import framework.Configuration;
-import framework.WDriver;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
 
@@ -17,10 +15,10 @@ public class BaseTest {
     public void setupTest() throws Exception {
         log = Logger.getGlobal();
         conf = new Configuration();
-        WDriver.getWebDriverInstance();
+        Browser.getWebDriverInstance();
     }
     @AfterTest
     public void teardownTest() {
-        WDriver.stopBrowser();
+        Browser.stopBrowser();
     }
 }

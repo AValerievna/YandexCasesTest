@@ -1,7 +1,7 @@
 package yandex.utils;
 
 import com.opencsv.CSVWriter;
-import framework.WDriver;
+import framework.Browser;
 
 import java.io.FileWriter;
 import java.io.IOException;
@@ -13,6 +13,7 @@ import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 import static framework.BaseTest.conf;
+
 
 public class UtilityMethods {
 
@@ -91,11 +92,11 @@ public class UtilityMethods {
      * Work with opening tag
      */
     public static void redirectionToLoginPage(String urlFragment) {
-        if (!WDriver.getWebDriverInstance().getCurrentUrl().contains(urlFragment)) {
+        if (!Browser.getWebDriverInstance().getCurrentUrl().contains(urlFragment)) {
             String[] handlers = new String[2];
-            handlers = WDriver.getWebDriverInstance().getWindowHandles().toArray(handlers);
+            handlers = Browser.getWebDriverInstance().getWindowHandles().toArray(handlers);
             System.out.println(handlers[1]);
-            WDriver.getWebDriverInstance().switchTo().window(handlers[1]);
+            Browser.getWebDriverInstance().switchTo().window(handlers[1]);
         }
     }
 

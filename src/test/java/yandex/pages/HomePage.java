@@ -1,6 +1,6 @@
 package yandex.pages;
 
-import framework.WDriver;
+import framework.Browser;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -38,7 +38,7 @@ public class HomePage extends Page {
     }
 
     public void returnToHomePage(String homeUrlFragment) {
-        WDriver.getWebDriverWaitInstance().until(ExpectedConditions.urlContains(homeUrlFragment));
+        Browser.getWebDriverWaitInstance().until(ExpectedConditions.urlContains(homeUrlFragment));
         wd.switchTo().window(wd.getWindowHandles().iterator().next());
         wd.navigate().refresh();
         waitForPageLoading();
@@ -46,12 +46,12 @@ public class HomePage extends Page {
 
     public void waitForPageLoading() {
         wd.findElement(btnPopup);
-        WDriver.getWebDriverWaitInstance().until(ExpectedConditions.elementToBeClickable(btnPopup));
+        Browser.getWebDriverWaitInstance().until(ExpectedConditions.elementToBeClickable(btnPopup));
     }
 
 
     public List<WebElement> getPopularList() {
-        WDriver.getWebDriverWaitInstance().until(ExpectedConditions.elementToBeClickable(lstTopMenu));
+        Browser.getWebDriverWaitInstance().until(ExpectedConditions.elementToBeClickable(lstTopMenu));
         return wd.findElements(lstTopMenu);
     }
 

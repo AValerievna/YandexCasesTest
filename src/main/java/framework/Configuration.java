@@ -7,7 +7,7 @@ import java.util.Properties;
 public class Configuration {
     private Properties prop;
 
-    public Configuration() throws IOException {
+    Configuration() throws IOException {
         prop = new Properties();
         prop.load(Configuration.class.getClassLoader().getResourceAsStream("configuration.properties"));
     }
