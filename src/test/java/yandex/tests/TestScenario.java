@@ -1,6 +1,5 @@
 package yandex.tests;
 
-import com.opencsv.CSVWriter;
 import framework.WDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -11,12 +10,8 @@ import yandex.pages.HomePage;
 import yandex.pages.LoginPage;
 import yandex.utils.UtilityMethods;
 
-import java.io.FileWriter;
-import java.io.IOException;
 import java.util.List;
 import java.util.Random;
-
-import static yandex.utils.UtilityMethods.*;
 
 public class TestScenario extends BaseTest{
 

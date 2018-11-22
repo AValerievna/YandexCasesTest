@@ -59,7 +59,7 @@ public class UtilityMethods {
      * get sale element optionally
      * end of product
      */
-    public static List<String> popularProducts(String yandexMarketMainPageContent) {
+    private static List<String> popularProducts(String yandexMarketMainPageContent) {
         List<String> result = new ArrayList<>();
         yandexMarketMainPageContent = yandexMarketMainPageContent.replaceAll(HTML_COMMENT_REGEX, REPLACEMENT);
         Pattern productsSectionPattern = Pattern.compile(String.join(DELIMITER,
