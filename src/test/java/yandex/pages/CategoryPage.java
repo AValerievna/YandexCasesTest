@@ -1,15 +1,18 @@
 package yandex.pages;
 
+import framework.BasePage;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public class CategoryPage extends Page{
+public class CategoryPage extends BasePage {
+    private static final By catPageIdent = By.className("n-layout_name_catalog");
+    private By btnHome = By.className("logo_part_market");
 
-    public CategoryPage(WebDriver wb){
-        super(wb);
+    public CategoryPage() {
+        super(catPageIdent);
     }
 
     public boolean rightCategoryThemeTitle(String keyText) {
@@ -25,5 +28,10 @@ public class CategoryPage extends Page{
         accord.put("Авто", "Товары для авто- и мототехники");
 
         return wd.findElement(By.xpath("//h1")).getText().contains(accord.get(keyText));
+    }
+
+
+    public void goToHomePage() {
+        wd.findElement(btnHome).click();
     }
 }

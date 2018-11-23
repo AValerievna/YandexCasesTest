@@ -3,7 +3,9 @@ package framework;
 import java.io.IOException;
 import java.util.Properties;
 
-/**Work with property file*/
+/**
+ * Work with property file
+ */
 public class Configuration {
     private Properties prop;
 
@@ -15,6 +17,7 @@ public class Configuration {
     public String getProperty(String propName) {
         return prop.getProperty(propName);
     }
+
     public char getCharProperty(String propName) {
         return prop.getProperty(propName).charAt(0);
     }

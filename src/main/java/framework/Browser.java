@@ -22,7 +22,9 @@ public class Browser {
 
     public static synchronized WebDriver getWebDriverInstance() {
         if (null == browser) {
-            switch (BrowserTypes.valueOf(conf.getProperty("browser"))) {
+            switch (BrowserTypes
+                    .valueOf(conf
+                            .getProperty("browser"))) {
                 case FIREFOX:
                     System.setProperty("webdriver.gecko.driver", conf.getProperty("gecko.driver.path"));
                     browser = new FirefoxDriver();
@@ -50,8 +52,8 @@ public class Browser {
         }
     }
 
-    static synchronized void stopBrowser(){
-        if (null != browser){
+    static synchronized void stopBrowser() {
+        if (null != browser) {
             browser.quit();
         }
         browser = null;
@@ -59,12 +61,19 @@ public class Browser {
         wait = null;
     }
 
-
-    public static Wait<WebDriver> getWait() {
+    static Wait<WebDriver> getWait() {
         if (wait == null || null == browser) {
             throw new IllegalStateException();
         } else {
             return wait;
         }
+    }
+
+    public static void getPage(String url) {
+        browser.get(url);
+    }
+
+    public static void refreshBr() {
+        browser.navigate().refresh();
     }
 }

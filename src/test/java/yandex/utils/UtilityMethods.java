@@ -95,13 +95,12 @@ public class UtilityMethods {
         if (!Browser.getWebDriverInstance().getCurrentUrl().contains(urlFragment)) {
             String[] handlers = new String[2];
             handlers = Browser.getWebDriverInstance().getWindowHandles().toArray(handlers);
-            System.out.println(handlers[1]);
             Browser.getWebDriverInstance().switchTo().window(handlers[1]);
         }
     }
 
     public static void writeToCSV(String sources) throws IOException {
-        CSVWriter writer = new CSVWriter(new FileWriter(conf.getProperty("csv.file.path")), conf.getCharProperty("separator"),CSVWriter.NO_QUOTE_CHARACTER,CSVWriter.NO_ESCAPE_CHARACTER,CSVWriter.DEFAULT_LINE_END);
+        CSVWriter writer = new CSVWriter(new FileWriter(conf.getProperty("csv.file.path")), conf.getCharProperty("separator"), CSVWriter.NO_QUOTE_CHARACTER, CSVWriter.NO_ESCAPE_CHARACTER, CSVWriter.DEFAULT_LINE_END);
         popularProducts(sources).stream()
                 .map(pr -> new String[]{pr})
                 .forEach(writer::writeNext);

@@ -19,43 +19,33 @@ public class TestScenario extends BaseTest {
     @Test
     public void testScenario() throws Exception {
 
-        HomePage objHomePage = new HomePage(conf.getProperty("home.url"), Browser.getWebDriverInstance());
-        Browser.getWebDriverInstance().get(objHomePage.getUrl());
+        Browser.getPage(conf.getProperty("home.url"));
+        HomePage objHomePage = new HomePage();
         Assert.assertTrue(objHomePage.homePageDataZoneExists(), "Home page did not load");
-        log.info("On Home Yandex Market Page");
+        log.info("On Home Yandex Market BasePage");
 
         objHomePage.clickLogin();
         UtilityMethods.redirectionToLoginPage(conf.getProperty("url.login.page.fragment"));
-        LoginPage objLoginPage = new LoginPage(conf.getProperty("login.url"), Browser.getWebDriverInstance());
+        LoginPage objLoginPage = new LoginPage();
 
-        objLoginPage.waitForLoad();
-        Assert.assertTrue(objLoginPage.passpPageDivExists(), "Login page did not load");
-        log.info("On Login Yandex Market Page");
+        log.info("On Login Yandex Market BasePage");
 
         objLoginPage.loginTo(conf.getProperty("usr.name"), conf.getProperty("str.pass"));
-        objHomePage.returnToHomePage(conf.getProperty("home.url.fragment"));
+        objLoginPage.returnToHomePage(conf.getProperty("home.url.fragment"));
         log.info("Authorized");
 
-        List<WebElement> popList = objHomePage.getPopularList();
-        log.info("Got list of categories");
+        String randName = objHomePage.goToRandomPage();
+        log.info("Gone to random category");
 
-        Random rand = new Random();
-        WebElement randomElement = popList.get(rand.nextInt(popList.size()));
-        String randName = randomElement.getAttribute(conf.getProperty("random.element.ident"));
-        Browser.getWebDriverWaitInstance().until(ExpectedConditions.elementToBeClickable(randomElement));
-        randomElement.click();
-        log.info("Chose random category");
-
-        CategoryPage objCatPage = new CategoryPage(Browser.getWebDriverInstance());
+        CategoryPage objCatPage = new CategoryPage();
         Assert.assertTrue(objCatPage.rightCategoryThemeTitle(randName), "Category page title is not correct");
         log.info("Category page has right title");
 
-        Browser.getWebDriverInstance().get(objHomePage.getUrl());
+        objCatPage.goToHomePage();
+        objHomePage = new HomePage();
+        Browser.refreshBr();
 
-        Browser.getWebDriverInstance().navigate().refresh();
-        objHomePage.waitForPageLoading();
-
-        UtilityMethods.writeToCSV(Browser.getWebDriverInstance().getPageSource());
+        UtilityMethods.writeToCSV(wd.getPageSource());
         log.info("Got list of popular things");
 
         objHomePage.logOut();
@@ -63,5 +53,6 @@ public class TestScenario extends BaseTest {
         log.info("Log out");
 
     }
+
 
 }
